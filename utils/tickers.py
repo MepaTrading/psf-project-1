@@ -7,3 +7,6 @@ def get_tickers(tickers, startdate=(datetime.datetime.today() - datetime.timedel
     return (pdr.get_data_yahoo(ticker, start=startdate, end=enddate))
   datas = map (data, tickers)
   return(pd.concat(datas, keys=tickers, names=['Ticker', 'Date']))
+
+def daily_adj_close(all_data):
+    return all_data[['Adj Close']].reset_index().pivot('Date', 'Ticker', 'Adj Close')
