@@ -4,6 +4,7 @@ yf.pdr_override()
 
 import datetime
 import pandas as pd
+import numpy as np
 
 def get_sharpe(df):
     adj_close = df[['Adj Close']].reset_index().pivot('Date', 'Ticker', 'Adj Close')
@@ -15,3 +16,14 @@ def get_sharpe(df):
 def get_annual_sharpe(df):
     sharpe = get_sharpe(df)
     return sharpe * (252**0.5) # Square root of 252 commercial days
+
+def get_return_by_ticker(df):
+    adj_close = df[['Adj Close']].reset_index().pivot('Date', 'Ticker', 'Adj Close')
+    daily_log_returns = np.log(adj_close.pct_change()+1)
+    daily_log_returns.fillna(0, inplace=True)
+    return_series = daily_log_returns.sum()
+    return return_series
+    
+def get_positive_return_tickers(df):
+    return_series = get_return_by_ticker(df)
+    return return_series[return_series > 0].index.values
