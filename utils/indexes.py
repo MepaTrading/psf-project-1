@@ -23,7 +23,14 @@ def get_return_by_ticker(df):
     daily_log_returns.fillna(0, inplace=True)
     return_series = daily_log_returns.sum()
     return return_series
-    
-def get_positive_return_tickers(df):
+
+def get_positive_return_tickers_series(df):
     return_series = get_return_by_ticker(df)
     return return_series[return_series > 0].index.values
+
+def filter_positive_returns(df):
+    return df.loc[ get_positive_return_tickers_series(df) , : ]
+
+def get_correlation(df):
+    adj_close = df[['Adj Close']].reset_index().pivot('Date', 'Ticker', 'Adj Close')
+    return adj_close.corr()
