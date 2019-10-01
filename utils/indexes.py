@@ -1,0 +1,17 @@
+from pandas_datareader import data as pdr
+import yfinance as yf
+yf.pdr_override()
+
+import datetime
+import pandas as pd
+
+def get_sharpe(df):
+    adj_close = df[['Adj Close']].reset_index().pivot('Date', 'Ticker', 'Adj Close')
+    daily_pct_change = adj_close.pct_change()
+    daily_pct_change.fillna(0, inplace=True)
+    sharpe = daily_pct_change.mean()/daily_pct_change.std()
+    return sharpe
+
+def get_annual_sharpe(df):
+    sharpe = get_sharpe(df)
+    return sharpe * (252**0.5) # Square root of 252 commercial days
