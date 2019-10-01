@@ -1,5 +1,6 @@
 from .files import *
 from .tickers import *
-from .graphs import *
+from .graphics import *
 from .indexes import *
 from .scrap import *
+from .graph import *

@@ -13,9 +13,9 @@ def get_sharpe(df):
     sharpe = daily_pct_change.mean()/daily_pct_change.std()
     return sharpe
 
-def get_annual_sharpe(df):
+def get_annual_sharpe(df, years=1):
     sharpe = get_sharpe(df)
-    return sharpe * (252**0.5) # Square root of 252 commercial days
+    return sharpe * ((years*252)**0.5) # Square root of 252 commercial days
 
 def get_return_by_ticker(df):
     adj_close = df[['Adj Close']].reset_index().pivot('Date', 'Ticker', 'Adj Close')

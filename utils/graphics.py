@@ -27,3 +27,15 @@ def volume_for_all_data(df, ticker):
     volume = plt.plot(dates_list, volume_list)
 
     return volume
+
+def monthly_return_for_all_data(df, ticker):
+    adj_close = df[['Adj Close']].reset_index().pivot('Date', 'Ticker', 'Adj Close').asfreq("M", method="bfill").pct_change().fillna(0)
+    return_df = adj_close[ticker].values
+
+    dates_list = np.linspace(1, len(adj_close[ticker].index.values), len(adj_close[ticker].index.values))
+
+    ret = plt.plot(dates_list, return_df)
+
+    return ret
+
+    
