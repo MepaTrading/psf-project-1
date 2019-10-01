@@ -6,7 +6,7 @@ def find_tag(father_tag):
     for tag in father_tag:
         span_tag = tag.find('span')
         for tag_2 in span_tag:
-            code_tag.append(str(tag_2))
+            code_tag.append(str(tag_2) + '.SA')
 
     return code_tag
 
@@ -17,12 +17,11 @@ def get_codes(carteiras):
         soup = BeautifulSoup(page.text, 'html.parser')
         tag_tabela = soup.find_all('td', {"class" : "rgSorted"})
         code_list = find_tag(tag_tabela)
-        print(code_list)
+    
+    return code_list
 
 carteiras = ['http://bvmf.bmfbovespa.com.br/indices/ResumoCarteiraTeorica.aspx?Indice=IMOB&idioma=pt-br',
             'http://bvmf.bmfbovespa.com.br/indices/ResumoCarteiraTeorica.aspx?Indice=UTIL&idioma=pt-br',
             'http://bvmf.bmfbovespa.com.br/indices/ResumoCarteiraTeorica.aspx?Indice=ICON&idioma=pt-br',
             'http://bvmf.bmfbovespa.com.br/indices/ResumoCarteiraTeorica.aspx?Indice=IMAT&idioma=pt-br',
             'http://bvmf.bmfbovespa.com.br/indices/ResumoCarteiraTeorica.aspx?Indice=INDX&idioma=pt-br']
-
-get_codes(carteiras)
